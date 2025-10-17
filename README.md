@@ -6,8 +6,7 @@ Run:
 ```bash
 make
 ```
-or alternatively
-Run:
+or alternatively run:
 ```bash
 make bonus
 ```
