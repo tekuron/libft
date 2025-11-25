@@ -1,71 +1,45 @@
-SOURCES = src/ft_atoi.c \
-	src/ft_bzero.c \
-	src/ft_calloc.c \
-	src/ft_isalnum.c \
-	src/ft_isalpha.c \
-	src/ft_isascii.c \
-	src/ft_isdigit.c \
-	src/ft_isprint.c \
-	src/ft_itoa.c \
-	src/ft_memchr.c \
-	src/ft_memcmp.c \
-	src/ft_memcpy.c \
-	src/ft_memmove.c \
-	src/ft_memset.c \
-	src/ft_putchar_fd.c \
-	src/ft_putendl_fd.c \
-	src/ft_putnbr_fd.c \
-	src/ft_putstr_fd.c \
-	src/ft_split.c \
-	src/ft_strchr.c \
-	src/ft_strdup.c \
-	src/ft_striteri.c \
-	src/ft_strjoin.c \
-	src/ft_strlcat.c \
-	src/ft_strlcpy.c \
-	src/ft_strlen.c \
-	src/ft_strmapi.c \
-	src/ft_strncmp.c \
-	src/ft_strnstr.c \
-	src/ft_strrchr.c \
-	src/ft_strtrim.c \
-	src/ft_substr.c \
-	src/ft_tolower.c \
-	src/ft_toupper.c
-BONUS = src/ft_lstnew_bonus.c \
-	src/ft_lstadd_front_bonus.c \
-	src/ft_lstsize_bonus.c \
-	src/ft_lstlast_bonus.c \
-	src/ft_lstadd_back_bonus.c \
-	src/ft_lstdelone_bonus.c \
-	src/ft_lstclear_bonus.c \
-	src/ft_lstiter_bonus.c \
-	src/ft_lstmap_bonus.c
-OBJECTS = $(SOURCES:.c=.o)
-BONUS_OBJECTS = $(BONUS:.c=.o)
-INCLUDES = -I inc
-
-CC = cc
+PROJECT = libft
 NAME = libft.a
+SRC_DIR = src
+INC_DIR = inc
+INCLUDE = -I $(INC_DIR)
+OBJ_DIR = obj
+
+CC = gcc
 CFLAGS = -Wall -Wextra -Werror
+RM = rm -rf
+AR = ar rcs
+
+# Colors
+GREEN = \033[0;32m
+YELLOW = \033[0;33m
+BLUE = \033[0;34m
+CYAN = \033[0;36m
+
+SRCS = $(shell find $(SRC_DIR) -name "*.c")
+
+OBJS = $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(SRCS))
 
 all: $(NAME)
 
-bonus: $(OBJECTS) $(BONUS_OBJECTS)
-	@ar rcs $(NAME) $(BONUS_OBJECTS) $(OBJECTS)
+$(NAME): $(OBJS)
+	@$(AR) $(NAME) $(OBJS)
+	@echo "$(GREEN)$(PROJECT) built: $(NAME)"
 
-%.o: %.c
-	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
-
-$(NAME): $(OBJECTS)
-	@ar rcs $(NAME) $(OBJECTS)
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
+	@mkdir -p $(dir $@)
+	@echo "$(CYAN)Compiling: $<"
+	@$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
 
 clean:
-	@rm -f $(OBJECTS) $(BONUS_OBJECTS)
+	@$(RM) $(OBJ_DIR)
+	@echo "$(BLUE)$(PROJECT) object files removed"
 
-fclean: clean 
-	@rm -f $(NAME)
+fclean: clean
+	@$(RM) $(NAME)
+	@echo "$(BLUE)$(PROJECT) clean (library removed)"
 
 re: fclean all
+	@echo "$(GREEN)$(PROJECT) rebuilt"
 
-.PHONY: all clean re fclean bonus
+.PHONY: all clean fclean re
