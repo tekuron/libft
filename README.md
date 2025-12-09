@@ -1,5 +1,6 @@
 # libft
-[![Score](https://img.shields.io/badge/Score-125/100-blue)](https://profile-v3.intra.42.fr/users/danzamor)
+![Language](https://img.shields.io/badge/Language-C-blue)
+![Score](https://img.shields.io/badge/Score-125%2F100-brightgreen)
 
 <p>Custom implementation of core C standard library functions and utilities, continuously maintained for 42 projects.</p>
 
